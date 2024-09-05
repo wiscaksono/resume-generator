@@ -12,12 +12,12 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 import { userInformationSchema, UserInformation as TUserInformation, userGPTKeySchema, UserGPTKey } from '@/schema'
 
-export const UserInformation = ({ data }: { data: TUserInformation }) => {
+export const UserInformation = ({ data }: { data: { user: TUserInformation; GPTKey: string } }) => {
   const [open, onOpenChange] = useState(false)
 
   const queryClient = useQueryClient()
-  const gptForm = useForm<UserGPTKey>({ resolver: zodResolver(userGPTKeySchema) })
-  const form = useForm<TUserInformation>({ defaultValues: data, resolver: zodResolver(userInformationSchema) })
+  const gptForm = useForm<UserGPTKey>({ defaultValues: { userGPTKey: data.GPTKey }, resolver: zodResolver(userGPTKeySchema) })
+  const form = useForm<TUserInformation>({ defaultValues: data.user, resolver: zodResolver(userInformationSchema) })
   const fieldExp = useFieldArray({ control: form.control, name: 'experience' })
   const fieldEdu = useFieldArray({ control: form.control, name: 'education' })
   const fieldLang = useFieldArray({ control: form.control, name: 'languages' })

@@ -69,7 +69,7 @@ export default function App() {
             </Button>
           </form>
         </Form>
-        {isFetched && data.user && <UserInformation data={data.user} />}
+        {isFetched && data && <UserInformation data={data} />}
       </section>
       <section className='space-y-2.5'>
         <div className='space-y-2 flex flex-col h-[65%]'>
