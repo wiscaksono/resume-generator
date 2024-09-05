@@ -3,7 +3,6 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
 import OpenAI from 'openai'
 import { useForm } from 'react-hook-form'
-import { unstable_batchedUpdates } from 'react-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery, useMutation } from '@tanstack/react-query'
 
@@ -40,10 +39,8 @@ export default function App() {
       if (!data.GPTKey || !data.user) return
       const AIClient = new OpenAI({ apiKey: data.GPTKey, dangerouslyAllowBrowser: true })
       await Promise.all([generateUserInformation(AIClient, data.user, jobDesc), generateCoverLetter(AIClient, data.user, jobDesc)]).then(([resumeRes, coverLetterRes]) => {
-        unstable_batchedUpdates(() => {
-          setResumeResult(resumeRes)
-          setCoverLetter(coverLetterRes)
-        })
+        setResumeResult(resumeRes)
+        setCoverLetter(coverLetterRes)
       })
     }
   })
