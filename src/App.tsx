@@ -24,7 +24,7 @@ export default function App() {
   const { data, isFetched } = useQuery({
     queryKey: ['user-data'],
     queryFn: () => {
-      const GPTKey = localStorage.getItem('gpt-key')
+      const GPTKey = localStorage.getItem('gpt-key') ?? ''
       if (!GPTKey) localStorage.setItem('gpt-key', '')
       const user = localStorage.getItem('user-data') ? (JSON.parse(localStorage.getItem('user-data')!) as TUserInformation) : null
       if (!user) localStorage.setItem('user-data', JSON.stringify(initialData))
@@ -69,7 +69,7 @@ export default function App() {
             </Button>
           </form>
         </Form>
-        {isFetched && data && <UserInformation data={data} />}
+        {isFetched && data.user && data.GPTKey && <UserInformation user={data.user} gptKey={data.GPTKey} />}
       </section>
       <section className='space-y-2.5'>
         <div className='space-y-2 flex flex-col h-[65%]'>
