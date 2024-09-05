@@ -39,7 +39,7 @@ export default function App() {
     mutationFn: async (jobDesc: string) => {
       if (!data.GPTKey || !data.user) return
       const AIClient = new OpenAI({ apiKey: data.GPTKey, dangerouslyAllowBrowser: true })
-      Promise.all([generateUserInformation(AIClient, data.user, jobDesc), generateCoverLetter(AIClient, data.user, jobDesc)]).then(([resumeRes, coverLetterRes]) => {
+      await Promise.all([generateUserInformation(AIClient, data.user, jobDesc), generateCoverLetter(AIClient, data.user, jobDesc)]).then(([resumeRes, coverLetterRes]) => {
         unstable_batchedUpdates(() => {
           setResumeResult(resumeRes)
           setCoverLetter(coverLetterRes)
