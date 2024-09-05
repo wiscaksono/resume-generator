@@ -1,6 +1,7 @@
 import * as React from 'react'
-import * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import * as LabelPrimitive from '@radix-ui/react-label'
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from 'react-hook-form'
 
 import { cn } from '@/lib/utils'
@@ -53,15 +54,16 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue)
 
-const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+const FormItem = ({ className, ...props }: React.HTMLAttributes<HTMLFieldSetElement>) => {
   const id = React.useId()
+  const [animationParent] = useAutoAnimate({ duration: 200, easing: 'ease-in-out' })
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('space-y-2', className)} {...props} />
+      <fieldset ref={animationParent} className={cn('space-y-2', className)} {...props} />
     </FormItemContext.Provider>
   )
-})
+}
 FormItem.displayName = 'FormItem'
 
 const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>>(({ className, ...props }, ref) => {
