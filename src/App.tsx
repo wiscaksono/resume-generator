@@ -67,7 +67,7 @@ export default function App() {
                 </FormItem>
               )}
             />
-            <Button type='submit' className='w-max' disabled={isPending || !data.GPTKey}>
+            <Button type='submit' className='w-max ml-auto' disabled={isPending || !data.GPTKey}>
               {!data.GPTKey ? 'Missing OPEN API Key' : isPending ? 'Generating...' : 'Generate'}
             </Button>
           </form>
