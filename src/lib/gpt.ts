@@ -96,7 +96,7 @@ export async function generateCoverLetter(AIClient: OpenAI, data: UserInformatio
 
 export async function generateUserInformation(AIClient: OpenAI, data: UserInformation, jobDescription: string) {
   const askGPT = await AIClient.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4-turbo',
     messages: [
       {
         role: 'system',
