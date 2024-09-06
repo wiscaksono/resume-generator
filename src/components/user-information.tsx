@@ -31,6 +31,11 @@ export const UserInformation = ({ user, gptKey }: { user: TUserInformation; gptK
     onOpenChange(false)
   }
 
+  async function onSubmitGPTKey(val: string) {
+    localStorage.setItem('gpt-key', val)
+    await queryClient.invalidateQueries({ queryKey: ['user-data'] })
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
@@ -44,7 +49,7 @@ export const UserInformation = ({ user, gptKey }: { user: TUserInformation; gptK
           <DialogDescription>Describe your self in a detail</DialogDescription>
         </DialogHeader>
         <Form {...gptForm}>
-          <form onSubmit={gptForm.handleSubmit(val => localStorage.setItem('gpt-key', val.userGPTKey), console.error)} className='flex items-end gap-2 w-full'>
+          <form onSubmit={gptForm.handleSubmit(val => onSubmitGPTKey(val.userGPTKey), console.error)} className='flex items-end gap-2 w-full'>
             <FormField
               control={gptForm.control}
               name='userGPTKey'

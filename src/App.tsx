@@ -21,7 +21,11 @@ export default function App() {
   const [coverLetter, setCoverLetter] = useState('')
   const [resumeResult, setResumeResult] = useState<TUserInformation>(initialData)
 
-  const { data, isFetched } = useQuery({
+  const {
+    data,
+    isFetched,
+    isSuccess: success
+  } = useQuery({
     queryKey: ['user-data'],
     queryFn: () => {
       const GPTKey = localStorage.getItem('gpt-key') ?? ''
@@ -69,7 +73,7 @@ export default function App() {
             </Button>
           </form>
         </Form>
-        {isFetched && data.user && data.GPTKey && <UserInformation user={data.user} gptKey={data.GPTKey} />}
+        {isFetched && success && <UserInformation user={data.user!} gptKey={data.GPTKey} />}
       </section>
       <section className='space-y-2.5'>
         <div className='space-y-2 flex flex-col h-[65%]'>
